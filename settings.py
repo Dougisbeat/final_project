@@ -11,6 +11,7 @@ font20 = pg.font.Font('freesansbold.ttf', 20)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
+RED = (255,0,0)
 # Basic parameters of the screen
 WIDTH, HEIGHT = 900, 600
 screen = pg.display.set_mode((WIDTH, HEIGHT))

@@ -24,5 +24,5 @@ make win/lose screen
 game_folder = os.path.dirname(__file__)
 
 
-
+main()
 pg.quit()

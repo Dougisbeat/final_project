@@ -1,15 +1,29 @@
 import pygame as pg
 from sprites import *
 from settings import *
+
+
 def main():
     running = True
-  
     # Defining the objects
     player1 = Paddle(20, 0, 10, 100, 10, WHITE)
-    player2 = AI(WIDTH-30, 0, 10, 100, WHITE)
+    player2 = Paddle(WIDTH-30, 0, 10, 100, 20, WHITE)
     ball = Ball(WIDTH//2, HEIGHT//2, 7, 7, WHITE)
   
     listOfPlayers = [player1, player2]
+    def new():
+        player1Score, player2Score == 0, 0
+        Paddle.posy = HEIGHT/2
+        screen.fill(BLACK)
+        screen.blit(background, (0,0))
+        player1.reset()
+        ball.reset()
+        player1.display()
+        player2.display()
+        ball.display()
+            
+
+    
   
     # Initial parameters of the players
     player1Score, player2Score = 0, 0
@@ -33,6 +47,8 @@ def main():
             if event.type == pg.KEYUP:
                 if event.key == pg.K_w or event.key == pg.K_s:
                     player1YFac = 0
+                if event.key == pg.K_r:
+                    new()
   
         # Collision detection
         for player in listOfPlayers:
@@ -55,6 +71,7 @@ def main():
         if point:   # Someone has scored a point and the
           # ball is out of bounds. So, we reset it's position
             ball.reset()
+        
   
         # Displaying the objects on the screen
         player1.display()
@@ -62,12 +79,29 @@ def main():
         ball.display()
   
         # Displaying the scores of the players
-        player1.displayScore("player_1 : ", player1Score, 100, 20, WHITE)
-        player2.displayScore("player_2 : ", player2Score, WIDTH-100, 20, WHITE)
+        player1.displayScore("Player : ", player1Score, 100, 20, WHITE)
+        player2.displayScore("Computer : ", player2Score, WIDTH-100, 20, WHITE)
+
+        
+        # win/lose screen
+        if player1Score >= 3:
+            screen.fill(BLACK)
+            draw_text("You Win", 55, GREEN, WIDTH/2, HEIGHT/3)
+            draw_text("Press r to restart", 55, WHITE, WIDTH/2, HEIGHT/2 + 100)
+        if player2Score >= 3:
+            screen.fill(BLACK)
+            draw_text("You Lose", 55, RED, WIDTH/2, HEIGHT/3)
+            draw_text("Press r to restart", 55, WHITE, WIDTH/2, HEIGHT/2 + 100)
   
         pg.display.update()
+        
         # Adjusting the frame rate
         clock.tick(FPS)
-
-def title():
-    
+        # drawing the text
+        def draw_text (text, size, color, x, y):
+            font_name = pg.font.match_font('comic sans')
+            font = pg.font.Font(font_name, size)
+            text_surface = font.render(text, True, color)
+            text_rect = text_surface.get_rect()
+            text_rect.midtop = (x,y)
+            screen.blit(text_surface, text_rect)
