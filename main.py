@@ -4,6 +4,7 @@ Sources:
 geeksforgeeks.com (game)
 https://www.youtube.com/watch?v=dGwmmBBMlKs (background)
 
+
 '''
 
 
@@ -19,6 +20,7 @@ Goals:
 make pong game
 make computer opponent
 make win/lose screen
+make restart
 '''
 # set up assets folders
 game_folder = os.path.dirname(__file__)

@@ -7,21 +7,10 @@ def main():
     running = True
     # Defining the objects
     player1 = Paddle(20, 0, 10, 100, 10, WHITE)
-    player2 = Paddle(WIDTH-30, 0, 10, 100, 20, WHITE)
+    player2 = AI(WIDTH-30, 0, 10, 100, 20, WHITE)
     ball = Ball(WIDTH//2, HEIGHT//2, 7, 7, WHITE)
   
     listOfPlayers = [player1, player2]
-    def new():
-        player1Score, player2Score == 0, 0
-        Paddle.posy = HEIGHT/2
-        screen.fill(BLACK)
-        screen.blit(background, (0,0))
-        player1.reset()
-        ball.reset()
-        player1.display()
-        player2.display()
-        ball.display()
-            
 
     
   
@@ -33,8 +22,9 @@ def main():
         screen.fill(BLACK)
         # background
         screen.blit(background, (0,0))
-
+        
         player2.posy = ball.posy
+        
         # Event handling
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -44,16 +34,42 @@ def main():
                     player1YFac = -1
                 if event.key == pg.K_s:
                     player1YFac = 1
+            if event.type == pg.K_r:
+                reset()
+                print("uhh")
+            if event.type == pg.K_9:
+                hard_mode()
+                print("hi")
+            if event.type == pg.K_8:
+                normal_mode()
+                print("hello")
+            if event.type == pg.K_7:
+                easy_mode()
+                print("yo")
             if event.type == pg.KEYUP:
                 if event.key == pg.K_w or event.key == pg.K_s:
                     player1YFac = 0
-                if event.key == pg.K_r:
-                    new()
+                
   
         # Collision detection
         for player in listOfPlayers:
             if pg.Rect.colliderect(ball.getRect(), player.getRect()):
                 ball.hit()
+        
+        def reset():
+            player1 = Paddle(20, 0, 10, 100, 10, WHITE)
+            player2 = Paddle(WIDTH-30, 0, 10, 100, 20, WHITE)
+            ball = Ball(WIDTH//2, HEIGHT//2, 7, 7, WHITE)
+            player1Score, player2Score = 0, 0
+            player1YFac, player2YFac = 0, 0
+            ball.reset()
+            
+        def hard_mode():
+            player2.posy = ball.posy 
+        def easy_mode():
+            player2.posy = ball.posy - 10     
+        def normal_mode():
+            player2.posy = ball.posy - 5
   
         # Updating the objects
         player1.update(player1YFac)
@@ -87,11 +103,11 @@ def main():
         if player1Score >= 3:
             screen.fill(BLACK)
             draw_text("You Win", 55, GREEN, WIDTH/2, HEIGHT/3)
-            draw_text("Press r to restart", 55, WHITE, WIDTH/2, HEIGHT/2 + 100)
+            
         if player2Score >= 3:
             screen.fill(BLACK)
             draw_text("You Lose", 55, RED, WIDTH/2, HEIGHT/3)
-            draw_text("Press r to restart", 55, WHITE, WIDTH/2, HEIGHT/2 + 100)
+            
   
         pg.display.update()
         
@@ -105,3 +121,5 @@ def main():
             text_rect = text_surface.get_rect()
             text_rect.midtop = (x,y)
             screen.blit(text_surface, text_rect)
+
+
